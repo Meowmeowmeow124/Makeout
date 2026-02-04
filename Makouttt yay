@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anisha Interactive Fun</title>
+<style>
+body {
+  margin:0;
+  font-family:"Comic Sans MS", Arial, sans-serif;
+  background:#1a1a1a;
+  color:#fff;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+  text-align:center;
+  overflow:hidden;
+}
+
+.slide {
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+}
+
+.slide.active {
+  display:flex;
+}
+
+h1 {
+  font-size:2.5rem;
+  margin:20px;
+}
+
+button {
+  font-size:1.5rem;
+  padding:12px 25px;
+  margin:15px;
+  border:none;
+  border-radius:12px;
+  cursor:pointer;
+  background:#fff;
+  color:#000;
+  transition:transform 0.2s;
+}
+button:hover {
+  transform:scale(1.1);
+}
+
+.bounce {
+  display:inline-block;
+  animation:bounce 1s infinite alternate;
+}
+@keyframes bounce {
+  0% {transform: translateY(0);}
+  100% {transform: translateY(-15px);}
+}
+
+#countdown {
+  font-size:3rem;
+  margin-top:20px;
+  color:#ff6666;
+}
+</style>
+</head>
+<body>
+
+<div class="slide active">
+  <h1>ANISHA, WILL YOU MAKE OUT WITH ME <span class="bounce">😔👉👈</span></h1>
+  <button onclick="nextSlide()">Continue</button>
+</div>
+
+<div class="slide">
+  <h1>Yes or No?</h1>
+  <button onclick="clickedYes()">Yes 😳</button>
+  <button onclick="clickedNo()">No 😔</button>
+</div>
+
+<div class="slide" id="responseSlide"></div>
+
+<div class="slide" id="tickSlide">
+  <h1>😔 Hard make out time ticks... ticks... ticks...</h1>
+  <div id="countdown">5</div>
+</div>
+
+<div class="slide">
+  <h1>We will update the makeout info after we do it 📰</h1>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+let current = 0;
+
+function nextSlide(){
+  slides[current].classList.remove('active');
+  current++;
+  slides[current].classList.add('active');
+
+  // start countdown if it's the tickSlide
+  if(slides[current].id === 'tickSlide'){
+    startCountdown();
+  }
+}
+
+function clickedYes(){
+  slides[current].classList.remove('active');
+  const response = document.getElementById('responseSlide');
+  response.innerHTML = "<h1>omgg <span class='bounce'>😔👉👈</span></h1><button onclick='nextSlide()'>Next</button>";
+  response.classList.add('active');
+  current = Array.from(slides).indexOf(response);
+}
+
+function clickedNo(){
+  slides[current].classList.remove('active');
+  const response = document.getElementById('responseSlide');
+  response.innerHTML = "<h1>😔 no? Areyy but no mane yes aitu case ot 😅</h1><button onclick='nextSlide()'>Next</button>";
+  response.classList.add('active');
+  current = Array.from(slides).indexOf(response);
+}
+
+function startCountdown(){
+  let count = 5;
+  const countdownEl = document.getElementById('countdown');
+  countdownEl.textContent = count;
+  const interval = setInterval(()=>{
+    count--;
+    countdownEl.textContent = count;
+    if(count === 0){
+      clearInterval(interval);
+      nextSlide();
+    }
+  }, 1000);
+}
+</script>
+
+</body>
+</html>
